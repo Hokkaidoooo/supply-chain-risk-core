@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">产业链风险传播与数据契约</title>
+  <desc id="desc">以路径、口径和证据理解风险。合成路径示例展示系数连乘。</desc>
+  <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#88d1d0"/></marker></defs>
+  <rect width="1200" height="640" rx="20" fill="#101b20"/><rect width="1200" height="640" rx="20" fill="url(#g)"/>
+  <text x="56" y="65" fill="#88d1d0" font-family="Consolas,monospace" font-size="15" letter-spacing="3">SUPPLY CHAIN / RISK CORE</text>
+  <text x="54" y="143" fill="#f1f3e9" font-family="Microsoft YaHei,Arial,sans-serif" font-size="44" font-weight="700">产业链风险传播</text>
+  <text x="56" y="193" fill="#b2c3c8" font-family="Microsoft YaHei,Arial,sans-serif" font-size="23">路径 · 口径 · 证据</text>
+  <g stroke="#88d1d0" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M190 331L444 274"/><path d="M554 274L847 331"/><path d="M190 359L444 420"/><path d="M554 420L847 359"/></g>
+  <g fill="#1d3038" stroke="#466069"><rect x="80" y="303" width="110" height="84" rx="10"/><rect x="444" y="232" width="110" height="84" rx="10"/><rect x="444" y="378" width="110" height="84" rx="10"/><rect x="847" y="303" width="230" height="84" rx="10" stroke="#c1ee88"/></g>
+  <g fill="#dce9e9" font-family="Microsoft YaHei,Arial,sans-serif" font-size="21" text-anchor="middle"><text x="135" y="354">原料</text><text x="499" y="283">加工</text><text x="499" y="429">替代环节</text><text x="962" y="354">终端暴露 0.24</text></g>
+  <g fill="#b2c3c8" font-family="Consolas,monospace" font-size="18"><text x="306" y="282">0.5</text><text x="687" y="282">0.4</text><text x="304" y="425">0.3</text><text x="687" y="425">0.8</text></g>
+  <text x="58" y="595" fill="#91a6ae" font-family="Microsoft YaHei,Arial,sans-serif" font-size="15">合成示例：最强路径系数连乘，不是违约概率。</text>
+</svg>

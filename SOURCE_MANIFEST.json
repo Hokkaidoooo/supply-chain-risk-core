@@ -1,0 +1,29 @@
+{
+  "snapshot_date": "2026-10-14",
+  "modules": [
+    {
+      "path": "src/financial_metrics.py",
+      "original_sha256": "ef14ed8d7443df7115457a6b0121ed8b93a8ef5884e396c55f36586690bb2172",
+      "public_sha256": "ef14ed8d7443df7115457a6b0121ed8b93a8ef5884e396c55f36586690bb2172",
+      "relationship": "unchanged_snapshot"
+    },
+    {
+      "path": "src/missing_values.py",
+      "original_sha256": "6ab0683c6984f1c59f39aac3ef25506d2e2425258692a76dafd4aef91e263893",
+      "public_sha256": "6ab0683c6984f1c59f39aac3ef25506d2e2425258692a76dafd4aef91e263893",
+      "relationship": "unchanged_snapshot"
+    },
+    {
+      "path": "src/submission_contract.py",
+      "original_sha256": "c40c16970ecceb1a6b1d3c8a99a77815fffc3e143389fa55e088bf6683b8d03e",
+      "public_sha256": "c40c16970ecceb1a6b1d3c8a99a77815fffc3e143389fa55e088bf6683b8d03e",
+      "relationship": "unchanged_snapshot"
+    },
+    {
+      "path": "src/supply_chain.py",
+      "original_sha256": "11cf69dce4d898f9ff63aea836af48b8f8ff13a8f2e0c49f167bc8d74a868d89",
+      "public_sha256": "91dfcdb76be7b0c87106a8b710a5d8c7dd6929d855814837fd0b86114833ff8c",
+      "relationship": "adapted_graph_injection"
+    }
+  ]
+}
