@@ -2,21 +2,18 @@
 from pathlib import Path
 import json
 import math
-import sys
 import tempfile
 import unittest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-
 import networkx as nx
 
-from financial_metrics import (
+from supply_chain_risk_core.financial_metrics import (
     CANONICAL_EBIT_BASIS,
     canonicalize_earnings,
     interest_coverage,
 )
-from submission_contract import SubmissionContractError, load_submission_contract
-from supply_chain import (
+from supply_chain_risk_core.submission_contract import SubmissionContractError, load_submission_contract
+from supply_chain_risk_core.supply_chain import (
     downstream_of,
     upstream_of,
     transmission_paths,
@@ -89,7 +86,7 @@ class PropagationTests(unittest.TestCase):
 
     def test_credit_does_not_invent_factual_edges(self):
         self.assertEqual(credit_transmission_paths("A"), [])
-        with self.assertRaises(NotImplementedError):
+        with self.assertRaises(ValueError):
             credit_transmission_paths("A", [{"source": "B", "target": "A"}])
 
 

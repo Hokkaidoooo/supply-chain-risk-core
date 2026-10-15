@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=75,<83"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "supply-chain-risk-core"
+version = "0.2.0"
+description = "产业链最强路径暴露、财务口径与可追溯企业事实关系"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["networkx>=3.4.2,<4"]
+
+[project.scripts]
+risk-core-demo = "supply_chain_risk_core.demo:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
