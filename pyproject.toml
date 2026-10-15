@@ -4,14 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "supply-chain-risk-core"
-version = "0.2.0"
-description = "产业链最强路径暴露、财务口径与可追溯企业事实关系"
+version = "0.3.0"
+description = "产业链传导、授信规则、可追溯情景分析与报告复现"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["networkx>=3.4.2,<4"]
+dependencies = ["networkx>=3.4.2,<4", "numpy>=1.26.4,<3", "pandas>=2.2,<3"]
+
+[project.optional-dependencies]
+reports = ["openpyxl>=3.1.5,<4", "python-docx>=1.2,<2"]
+dev = ["build>=1.2,<2", "ruff>=0.13,<1"]
 
 [project.scripts]
 risk-core-demo = "supply_chain_risk_core.demo:main"
+risk-study = "supply_chain_risk_core.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+supply_chain_risk_core = ["data/*.json"]
+
+[tool.ruff.lint]
+select = ["E9", "F63", "F7", "F82"]

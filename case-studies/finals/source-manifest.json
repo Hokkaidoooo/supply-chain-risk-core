@@ -1,0 +1,104 @@
+{
+  "version": "2026-10-11",
+  "data_kind": "original_competition_analysis",
+  "workbooks": 5,
+  "worksheets": 31,
+  "figures": 13,
+  "files": [
+    {
+      "path": "case-studies/finals/006.xlsx",
+      "sha256": "9f794494e31453289a7e694ddd8e7cdc6973cdd578f5a2f5f141c0e40a45e577",
+      "bytes": 519054
+    },
+    {
+      "path": "case-studies/finals/011.xlsx",
+      "sha256": "16fefb87a5ec24062db38c343becef8e3fc3eea8a85b9b7e6a449d135907fb27",
+      "bytes": 364687
+    },
+    {
+      "path": "case-studies/finals/018.xlsx",
+      "sha256": "44a38029efdceb7ca7bd65892ae2ffc2f7cc218bdd513428009889a01aa06002",
+      "bytes": 366658
+    },
+    {
+      "path": "case-studies/finals/023.xlsx",
+      "sha256": "325ebc80a361b9ec16ad25f7d66437e20dafc5511929a596db3c716532507237",
+      "bytes": 549714
+    },
+    {
+      "path": "case-studies/finals/025.xlsx",
+      "sha256": "557138999653d83ffb3904c5ab048610f9529d7cc2d5aec3d727ad4c9970913b",
+      "bytes": 508808
+    },
+    {
+      "path": "case-studies/finals/figures/006_chain1.png",
+      "sha256": "708525459d0cae583687c47162c69e405aed2a2f760cb844ea4c379f1d4fea8b",
+      "bytes": 165940
+    },
+    {
+      "path": "case-studies/finals/figures/006_chain2.png",
+      "sha256": "1b11e3bb0956948c790decb2113487e6983ae6b67ad6a8eb7368fefd0b976673",
+      "bytes": 174720
+    },
+    {
+      "path": "case-studies/finals/figures/006_chain3.png",
+      "sha256": "5b63a0d449dddcb818555db52ff6840eb7e8d4703c9d1e61387b084246695b75",
+      "bytes": 173655
+    },
+    {
+      "path": "case-studies/finals/figures/011_chain1.png",
+      "sha256": "2f47dde3e2cc65c43cccc5de2355eb14685c78d23f65529561db5df3cd3f2f10",
+      "bytes": 172410
+    },
+    {
+      "path": "case-studies/finals/figures/011_chain2.png",
+      "sha256": "0c917193e270b6ee28a874619916dca5192e19de104dff5a4311bbdf5255aed3",
+      "bytes": 188016
+    },
+    {
+      "path": "case-studies/finals/figures/018_chain1.png",
+      "sha256": "3d7ac462da5a4378b29e9a9d120deaf04f175e27e2b90d3f44469577598214d3",
+      "bytes": 183441
+    },
+    {
+      "path": "case-studies/finals/figures/018_chain2.png",
+      "sha256": "e763ce9c91bf6c9d64da24e0d2413a28b2c6595ecf785e7a49c109614c11225d",
+      "bytes": 178860
+    },
+    {
+      "path": "case-studies/finals/figures/023_chain1.png",
+      "sha256": "d9356b644397e6522364c869746b1311cfcfb9735c7e0e2bdf50d88b3038f461",
+      "bytes": 187726
+    },
+    {
+      "path": "case-studies/finals/figures/023_chain2.png",
+      "sha256": "5a05c1dcbc3031cf822bae767074325c2c07194a63fe4e6ac31414bd8fda4153",
+      "bytes": 171198
+    },
+    {
+      "path": "case-studies/finals/figures/023_chain3.png",
+      "sha256": "1e270cbe14a2070ee02b2ec8d8812cd5eebe7dea56bc8bcc5347053a2195d67f",
+      "bytes": 186435
+    },
+    {
+      "path": "case-studies/finals/figures/025_chain1.png",
+      "sha256": "0bae5601093daa20203f0eecbec4875bc5e9be0617576c359f6f9dae131c8b1a",
+      "bytes": 179880
+    },
+    {
+      "path": "case-studies/finals/figures/025_chain2.png",
+      "sha256": "83bc5d75b126b18d6a2464636d7650b0929f7f435f82cc30d11c81aea4c5ae06",
+      "bytes": 159631
+    },
+    {
+      "path": "case-studies/finals/figures/025_chain3.png",
+      "sha256": "c6d765745b02aad22b18fb77fa53c1ddf6a034e92d62a52df55fc3dc6ab845ba",
+      "bytes": 165354
+    },
+    {
+      "path": "case-studies/finals/model-explanation.docx",
+      "sha256": "3e707ecbbeb8d02de6cac16a8a761b1c21ab025ac660fed9e4e84c27790fcb19",
+      "bytes": 858320
+    }
+  ]
+}

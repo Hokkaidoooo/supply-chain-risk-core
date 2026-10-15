@@ -1,30 +1,196 @@
 {
-  "snapshot_date": "2026-10-14",
+  "snapshot_date": "2026-10-15",
   "adaptation_date": "2026-10-15",
+  "source_binding": "per_file_sha256_not_whole_repository_commit",
   "modules": [
+    {
+      "path": "src/supply_chain_risk_core/__init__.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "fe75d0150307d44f0fda0d0e39ca28f7914b2bee1046eeeff11b2846f625dd16",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/cli.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "96c4638c63e1b51628aab71f3c361c546dcbd3b4053a6f3e5bfc74cac0e49ce8",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/__init__.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "06c8add390dcf53cc3e135467c471b81dafdad3381a5e796f94193efb2619e7a",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/decision.py",
+      "original_path": "src/decision.py",
+      "original_sha256": "6a76141c0371f0f6438d0d6ae91de049c9efa8f6a305a759ade1119d8e4e0b31",
+      "public_sha256": "46221e2013df8ab1ac9dc12a0771c90b1c32801ddcdafcd0bf4255f1401014d2",
+      "relationship": "adapted_package_imports_and_invalid_number_failures"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/deep_features.py",
+      "original_path": "src/deep_features.py",
+      "original_sha256": "a2e501f7b107ed73ca6ad41b2b6a79d4623683640ddf247731ce556bce360d70",
+      "public_sha256": "e9269c3c87035fb8edfb225b9fc3037c7cf44734f1cbc05a5bf1ec1cbf91c4ad",
+      "relationship": "adapted_package_imports_and_public_input_validation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/financial_features.py",
+      "original_path": "src/features.py",
+      "original_sha256": "6281f805c5e5061e02cfbeb7efbf3eeeadbc4c51a0187d4a75583fc0fbc7d774",
+      "public_sha256": "41db12ce3b31f6ba795a8475ce817e546c95fbd325994d9cc99e378b0bbb5070",
+      "relationship": "extracted_financial_feature_pipeline"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/labels.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "0a5007be80e0560c14bc6592b87d7d6db5560b8f7f98e1e8eb59b4157893609c",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/rules.py",
+      "original_path": "src/config.py",
+      "original_sha256": "012114a87e34ef46b183fa034a8414186c6e83a2e2995d7db882f8f9235388bf",
+      "public_sha256": "6db1c5cc7d1b560ec10a27f0a542741f76e368647494a8dd595476b5d43a18d4",
+      "relationship": "extracted_eleven_rule_constants"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/scoring.py",
+      "original_path": "src/scoring.py",
+      "original_sha256": "e27491d66f5122d3a0af86879d650506cb05316c2ace0da25000afd54cae8d88",
+      "public_sha256": "eb79fe8830f9badfef685b027907d9e6d111abca5eab010463a80e702a43bbd8",
+      "relationship": "adapted_package_imports"
+    },
+    {
+      "path": "src/supply_chain_risk_core/credit/workflow.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "f334cfcef512b22e46ecd726a55c5bea370a443a8a438c4a6838c69d8c51eae2",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/demo.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "ca574e660ac5076ae7992417b52d58687ab94fa22eb3fe39e6a4b63a22899bd6",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/evidence.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "72a20f2fdce34fc00fcaee78cad4bce162bea4b505d933ab415ebe1fd7519378",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/facts.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "f1a8b9a3c5ba00cb47f11683d5bde33cbba9fdfc7919126e7587d159c3469560",
+      "relationship": "public_implementation"
+    },
     {
       "path": "src/supply_chain_risk_core/financial_metrics.py",
       "original_sha256": "ef14ed8d7443df7115457a6b0121ed8b93a8ef5884e396c55f36586690bb2172",
       "public_sha256": "cd892b128163b8774d51cb9c649f9355288da5acacd2e3cd6e232ef03a8385e8",
-      "relationship": "adapted_strict_defaults_and_explicit_migration"
+      "relationship": "adapted_strict_defaults_and_explicit_migration",
+      "original_path": "src/financial_metrics.py"
+    },
+    {
+      "path": "src/supply_chain_risk_core/input_output.py",
+      "original_path": "src/transmission_impact.py",
+      "original_sha256": "a84a368bb1169e46d0e59db8debbc64dc8ad29856dd3b2e439c66d0201c284cb",
+      "public_sha256": "dc65c511d6432f3e74baac8b095ae7716a0c7ff09182a96765ccf03816836035",
+      "relationship": "parameterized_matrix_solver_from_original_method"
     },
     {
       "path": "src/supply_chain_risk_core/missing_values.py",
       "original_sha256": "6ab0683c6984f1c59f39aac3ef25506d2e2425258692a76dafd4aef91e263893",
       "public_sha256": "6ab0683c6984f1c59f39aac3ef25506d2e2425258692a76dafd4aef91e263893",
+      "relationship": "unchanged_snapshot",
+      "original_path": "src/missing_values.py"
+    },
+    {
+      "path": "src/supply_chain_risk_core/reporting.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "177b88e9fa79ad9fec7208c78697c1927ca6e5cfc984881f3d9bcb7b77edd445",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/scenarios.py",
+      "original_path": "src/transmission_impact.py",
+      "original_sha256": "a84a368bb1169e46d0e59db8debbc64dc8ad29856dd3b2e439c66d0201c284cb",
+      "public_sha256": "400c2059bbb58d2a45a9d593362282a046bc9782905267d70e212013bddb5a11",
+      "relationship": "extracted_scenarios_with_strict_numeric_inputs"
+    },
+    {
+      "path": "src/supply_chain_risk_core/stage2/__init__.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "4d940b81d82eb3872949812899d9f92993e0440a0365471a16e3900557db2dca",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/stage2/analysis.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "d4b0627790495f72f620701553f2eef64ac80ae2c28b8848d8faf2a80686f7fd",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/stage2/projection.py",
+      "original_path": "src/stage2/projection.py",
+      "original_sha256": "2c12f9f7ec2a562ca55c62a09f74e647162f12b0151e993b6189760fe91650e1",
+      "public_sha256": "2c12f9f7ec2a562ca55c62a09f74e647162f12b0151e993b6189760fe91650e1",
       "relationship": "unchanged_snapshot"
+    },
+    {
+      "path": "src/supply_chain_risk_core/stage2/quantitative.py",
+      "original_path": "src/stage2/quantitative.py",
+      "original_sha256": "80802852f45c756a7e6424e5484d4f334868bd6a8024f3bf709617a6d208c5b5",
+      "public_sha256": "63e90abb56649aadb5705a20612c7c60e2a1798a50f89b97ad54207d4267e058",
+      "relationship": "extracted_parameterized_quantitative_functions"
+    },
+    {
+      "path": "src/supply_chain_risk_core/study.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "9005cc7305dc7d22d3a99b29d8ab44aa2ac5deb2740966687a37036c34fd66ca",
+      "relationship": "public_implementation"
     },
     {
       "path": "src/supply_chain_risk_core/submission_contract.py",
       "original_sha256": "c40c16970ecceb1a6b1d3c8a99a77815fffc3e143389fa55e088bf6683b8d03e",
       "public_sha256": "c40c16970ecceb1a6b1d3c8a99a77815fffc3e143389fa55e088bf6683b8d03e",
-      "relationship": "unchanged_snapshot"
+      "relationship": "unchanged_snapshot",
+      "original_path": "src/submission_contract.py"
     },
     {
       "path": "src/supply_chain_risk_core/supply_chain.py",
       "original_sha256": "11cf69dce4d898f9ff63aea836af48b8f8ff13a8f2e0c49f167bc8d74a868d89",
       "public_sha256": "7770ebbeaadf3837b0125edf20d105cdb3796bcd11962657bfa5a91cc43501ba",
-      "relationship": "adapted_graph_injection_and_budgeted_shared_traversal"
+      "relationship": "adapted_graph_injection_and_budgeted_shared_traversal",
+      "original_path": "src/supply_chain.py"
+    },
+    {
+      "path": "src/supply_chain_risk_core/validation.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "83d29d01ff82bc69a21f870ee8fbb59d31e4806810762f4459a28236c89fb34b",
+      "relationship": "public_implementation"
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "src/supply_chain_risk_core/data/example.json",
+      "sha256": "268ad0b33329cdbafbe078590c591844d208aca8e6af4b2ac8407963f94be2e1",
+      "data_kind": "synthetic_demonstration"
     }
   ]
 }

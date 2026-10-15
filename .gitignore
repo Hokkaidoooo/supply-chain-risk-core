@@ -11,3 +11,6 @@ __pycache__/
 output/
 data/
 data_external/
+!src/supply_chain_risk_core/data/
+src/supply_chain_risk_core/data/*
+!src/supply_chain_risk_core/data/example.json

@@ -1,5 +1,16 @@
 # 0.2.0 API 与迁移
 
+## 完整研究流程
+
+`from supply_chain_risk_core.study import analyze_study` 接收[输入契约](input-schema.md)中的字典，返回独立的分析结果，不写文件。`from supply_chain_risk_core.credit.workflow import WorkflowOptions` 配置复核标记、历史行业先验和建议策略。
+
+`from supply_chain_risk_core.input_output import analyze_input_output` 接收节点名称、直接消耗矩阵和固定价格源头，返回总需求与价格影响。默认最多 256 个节点，条件数上限为 `1e12`；分别传入 `max_nodes=None`、`condition_limit=None` 可以关闭对应计算预算或数值敏感性检查。非负性与谱半径仍须满足模型定义。
+
+报告目录由 `supply_chain_risk_core.cli.run_to_directory` 生成，`verify_directory` 核验成员与字节并重新计算。输出目录和成员均独占创建，不覆盖已有结果；清单最后落地。命令行详见 [README](../README.md) 与 [复现说明](reproducibility.md)。
+
+路径与财务核心的参数见下文。
+
+
 Python >=3.10，NetworkX >=3.4.2,<4。运行依赖以 `pyproject.toml` 为唯一配置源。
 
 ```python

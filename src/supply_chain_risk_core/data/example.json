@@ -1,0 +1,599 @@
+{
+  "schema_version": 1,
+  "title": "产业链风险与授信分析示例",
+  "data_kind": "synthetic_demonstration",
+  "as_of": "2026-06-30",
+  "sources": {
+    "source-SYN001": {
+      "title": "source-SYN001",
+      "url": "https://example.org/synthetic/source-SYN001",
+      "published_at": "2026-03-01",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "content": "合成企业甲的年度财务与工商演示输入。所有金额、主体、来源网址和页码都仅用于演示，不是真实企业披露。",
+      "sha256": "8af78dfd33178a81b464bc44036116ee7b1add8955e985ec68206af22765009c",
+      "kind": "synthetic_demonstration"
+    },
+    "source-SYN002": {
+      "title": "source-SYN002",
+      "url": "https://example.org/synthetic/source-SYN002",
+      "published_at": "2026-03-01",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "content": "合成企业乙的财务压力演示输入。所有金额、主体、来源网址和页码都仅用于演示，不是真实企业披露。",
+      "sha256": "c8aef3153f051a8b362e3acda9e9819b4470f1b643dd994b701940d78eb5e4dd",
+      "kind": "synthetic_demonstration"
+    },
+    "source-SYN003": {
+      "title": "source-SYN003",
+      "url": "https://example.org/synthetic/source-SYN003",
+      "published_at": "2026-03-01",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "content": "合成企业丙明确缺失实缴、参保、风险查询和财务信息，用于验证未知状态不会被掩盖。",
+      "sha256": "9b00b947ddd2782e903964f561c8f4b5a87204ba0abf14b6d9ef45994bf9f4e5",
+      "kind": "synthetic_demonstration"
+    },
+    "source-model": {
+      "title": "source-model",
+      "url": "https://example.org/synthetic/source-model",
+      "published_at": "2026-03-01",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "content": "四节点合成投入产出模型：原料到加工0.5，到替代环节0.3；加工到终端0.4，替代环节到终端0.8。量化案例参数均为人工设定。",
+      "sha256": "b7b1b992c2c2d5363d189cadbbcbb436f7785ef7c61125d4f5c6d171867195fc",
+      "kind": "synthetic_demonstration"
+    }
+  },
+  "companies": [
+    {
+      "company_id": "SYN001",
+      "name": "示例装备科技",
+      "industry": "电气机械和器材制造业",
+      "region": "江苏省",
+      "registration": {
+        "注册资本": "2,000万元",
+        "实缴资本": "2,000万元",
+        "成立日期": "2010-01-01",
+        "核准日期": "2025-04-01",
+        "参保人数": "120人",
+        "营业期限": "2010-01-01 至 2040-01-01",
+        "经营状态": "存续",
+        "企业类型": "股份有限公司",
+        "注册地址": "示例市演示工业园一号",
+        "最新年报地址": "示例市演示工业园一号",
+        "网址": "https://example.org/SYN001",
+        "经营范围": "一般项目：电气设备制造；技术服务",
+        "所属城市": "示例市",
+        "所属区县": "示例区",
+        "法定代表人": "SYN001演示负责人"
+      },
+      "risk_signals": {
+        "is_dishonest": false,
+        "is_serious_illegal": false,
+        "penalty_cnt_1y": 0,
+        "severe_penalty_cnt_1y": 0,
+        "enforcement_cnt_1y": 0,
+        "business_abnormal_cnt_1y": 0
+      },
+      "context": {
+        "region_gdp_growth": 5,
+        "ind_cost_shock": 0,
+        "ind_policy_score": 0,
+        "ind_event_score": 0,
+        "export_shock": 0
+      },
+      "financials": {
+        "source_ref": "source-SYN001",
+        "revenue_yi": 20,
+        "total_profit_yi": 1.2,
+        "interest_expense_yi": 0.3,
+        "ebit_yi": 1.5,
+        "ebit_basis": "total_profit_plus_interest_expense",
+        "cash_yi": 4,
+        "short_term_debt_yi": 2,
+        "debt_ratio_pct": 40,
+        "net_profit_yi": 1,
+        "net_profit_prev_yi": 0.9,
+        "net_profit_prev2_yi": 0.8,
+        "guarantee_to_equity_pct": 0,
+        "equity_parent_yi": 10,
+        "turn_to_loss": 0,
+        "st_flag_in_window": 0,
+        "audit_nonstandard": 0,
+        "loss_years_3y": 0,
+        "st_revoked_date": null,
+        "annual_pdf_sha256": "8af78dfd33178a81b464bc44036116ee7b1add8955e985ec68206af22765009c",
+        "fiscal_year": 2025,
+        "liquidity_adjustments": {
+          "schema_version": 1,
+          "company_id": "SYN001",
+          "annual_pdf_sha256": "8af78dfd33178a81b464bc44036116ee7b1add8955e985ec68206af22765009c",
+          "pub_date": "2026-03-01",
+          "source_url": "https://example.org/synthetic/source-SYN001",
+          "pdf_pages": [
+            1
+          ],
+          "cash_restricted_yi": 0,
+          "cash_earmarked_yi": 0,
+          "other_short_borrowings_yi": 0,
+          "non_financing_deductions_yi": 0
+        }
+      },
+      "source_refs": [
+        "source-SYN001"
+      ]
+    },
+    {
+      "company_id": "SYN002",
+      "name": "示例制造乙",
+      "industry": "电气机械和器材制造业",
+      "region": "江苏省",
+      "registration": {
+        "注册资本": "2,000万元",
+        "实缴资本": "2,000万元",
+        "成立日期": "2010-01-01",
+        "核准日期": "2025-04-01",
+        "参保人数": "120人",
+        "营业期限": "2010-01-01 至 2040-01-01",
+        "经营状态": "存续",
+        "企业类型": "股份有限公司",
+        "注册地址": "示例市演示工业园一号",
+        "最新年报地址": "示例市演示工业园一号",
+        "网址": "https://example.org/SYN002",
+        "经营范围": "一般项目：电气设备制造；技术服务",
+        "所属城市": "示例市",
+        "所属区县": "示例区",
+        "法定代表人": "SYN002演示负责人"
+      },
+      "risk_signals": {
+        "is_dishonest": false,
+        "is_serious_illegal": false,
+        "penalty_cnt_1y": 0,
+        "severe_penalty_cnt_1y": 0,
+        "enforcement_cnt_1y": 0,
+        "business_abnormal_cnt_1y": 0
+      },
+      "context": {
+        "region_gdp_growth": 5,
+        "ind_cost_shock": 0,
+        "ind_policy_score": 0,
+        "ind_event_score": 0,
+        "export_shock": 0
+      },
+      "financials": {
+        "source_ref": "source-SYN002",
+        "revenue_yi": 10,
+        "total_profit_yi": -0.1,
+        "interest_expense_yi": 0.3,
+        "ebit_yi": 0.2,
+        "ebit_basis": "total_profit_plus_interest_expense",
+        "cash_yi": 0.5,
+        "short_term_debt_yi": 2,
+        "debt_ratio_pct": 78,
+        "net_profit_yi": -0.8,
+        "net_profit_prev_yi": -0.3,
+        "net_profit_prev2_yi": 0.1,
+        "guarantee_to_equity_pct": 0,
+        "equity_parent_yi": 10,
+        "turn_to_loss": 1,
+        "st_flag_in_window": 0,
+        "audit_nonstandard": 0,
+        "loss_years_3y": 2,
+        "st_revoked_date": null,
+        "annual_pdf_sha256": "c8aef3153f051a8b362e3acda9e9819b4470f1b643dd994b701940d78eb5e4dd",
+        "fiscal_year": 2025,
+        "liquidity_adjustments": {
+          "schema_version": 1,
+          "company_id": "SYN002",
+          "annual_pdf_sha256": "c8aef3153f051a8b362e3acda9e9819b4470f1b643dd994b701940d78eb5e4dd",
+          "pub_date": "2026-03-01",
+          "source_url": "https://example.org/synthetic/source-SYN002",
+          "pdf_pages": [
+            1
+          ],
+          "cash_restricted_yi": 0,
+          "cash_earmarked_yi": 0,
+          "other_short_borrowings_yi": 0,
+          "non_financing_deductions_yi": 0
+        }
+      },
+      "source_refs": [
+        "source-SYN002"
+      ]
+    },
+    {
+      "company_id": "SYN003",
+      "name": "示例信息不足企业",
+      "industry": "电气机械和器材制造业",
+      "region": "江苏省",
+      "registration": {
+        "注册资本": "2,000万元",
+        "实缴资本": null,
+        "成立日期": "2010-01-01",
+        "核准日期": "2025-04-01",
+        "参保人数": null,
+        "营业期限": "2010-01-01 至 2040-01-01",
+        "经营状态": "存续",
+        "企业类型": "股份有限公司",
+        "注册地址": "示例市演示工业园一号",
+        "最新年报地址": "示例市演示工业园一号",
+        "网址": "https://example.org/SYN003",
+        "经营范围": "一般项目：电气设备制造；技术服务",
+        "所属城市": "示例市",
+        "所属区县": "示例区",
+        "法定代表人": "SYN003演示负责人"
+      },
+      "risk_signals": {
+        "is_dishonest": null,
+        "is_serious_illegal": null,
+        "penalty_cnt_1y": null,
+        "severe_penalty_cnt_1y": null,
+        "enforcement_cnt_1y": null,
+        "business_abnormal_cnt_1y": null
+      },
+      "context": {
+        "region_gdp_growth": null,
+        "ind_cost_shock": null,
+        "ind_policy_score": null,
+        "ind_event_score": null,
+        "export_shock": null
+      },
+      "financials": null,
+      "source_refs": [
+        "source-SYN003"
+      ]
+    }
+  ],
+  "input_output": {
+    "nodes": [
+      "原料",
+      "加工",
+      "替代环节",
+      "终端"
+    ],
+    "direct_coefficients": [
+      [
+        0,
+        0.5,
+        0.3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0.4
+      ],
+      [
+        0,
+        0,
+        0,
+        0.8
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "price_source": "原料",
+    "source_refs": [
+      "source-model"
+    ]
+  },
+  "chains": [
+    {
+      "layers": [
+        [
+          {
+            "id": "raw",
+            "label": "演示原料",
+            "scores": {
+              "impact": 3,
+              "substitutability": 3,
+              "consequence": 3
+            },
+            "comparison": {
+              "impact": "按演示规格给定影响范围。",
+              "substitutability": "按演示窗口内替换条件给定。",
+              "consequence": "用于本链内比较传导后果。",
+              "counter_evidence": "库存缓冲与替代订单可减轻影响。",
+              "reversal_condition": "实际合同与备货变化后须重新评定。"
+            }
+          }
+        ],
+        [
+          {
+            "id": "assembly",
+            "label": "演示加工",
+            "scores": {
+              "impact": 4,
+              "substitutability": 4,
+              "consequence": 4
+            },
+            "comparison": {
+              "impact": "按演示规格给定影响范围。",
+              "substitutability": "按演示窗口内替换条件给定。",
+              "consequence": "用于本链内比较传导后果。",
+              "counter_evidence": "库存缓冲与替代订单可减轻影响。",
+              "reversal_condition": "实际合同与备货变化后须重新评定。"
+            }
+          }
+        ],
+        [
+          {
+            "id": "brand",
+            "label": "演示终端",
+            "scores": {
+              "impact": 2,
+              "substitutability": 2,
+              "consequence": 2
+            },
+            "comparison": {
+              "impact": "按演示规格给定影响范围。",
+              "substitutability": "按演示窗口内替换条件给定。",
+              "consequence": "用于本链内比较传导后果。",
+              "counter_evidence": "库存缓冲与替代订单可减轻影响。",
+              "reversal_condition": "实际合同与备货变化后须重新评定。"
+            }
+          }
+        ]
+      ],
+      "links": [
+        [
+          "raw",
+          "assembly"
+        ],
+        [
+          "assembly",
+          "brand"
+        ]
+      ],
+      "event_kind": "conditional_scenario",
+      "risk_event": "上游价格上涨的说明性情景",
+      "event_scope": "合成业务链，不对应真实企业事件",
+      "path_boundary": "只展示典型实体路径，投入产出矩阵另包含替代支路；不把行业关系视为真实客户名单。",
+      "core_node": "brand",
+      "core_reason": "演示终端组织订单并影响合同价格。",
+      "highest_node": "assembly",
+      "lowest_node": "brand",
+      "high_reason": "演示加工环节替代和调价较慢。",
+      "low_reason": "演示终端有订单结构调整余地。",
+      "impact": "扰动影响演示加工与终端。",
+      "substitutability": "演示窗口内更换材料需调整工艺。",
+      "consequence": "成本增加或订单减少使收益承压。",
+      "counter_evidence": "预先锁价、库存与新增订单可缓冲冲击。",
+      "boundary": "只在给定结构、贡献率与固定成本假设下成立。",
+      "target_impact": "终端在给定转嫁条件下吸收部分原料涨价成本，付息缓冲随之减少。",
+      "id": "cost-chain",
+      "title": "原料涨价对终端的成本影响",
+      "company_id": "SYN001",
+      "risk_path": [
+        "raw",
+        "assembly",
+        "brand"
+      ],
+      "steps": [
+        {
+          "effect": "成本抬升使相邻环节承接风险。",
+          "share_band": "substantial",
+          "substitution_band": "costly",
+          "basis_kind": "structural",
+          "tag": "成本抬升",
+          "basis": "事实：本案例假设存在对应业务连接。待核：真实采购份额、替代成本和合同调价条款。",
+          "disclosed_share": null
+        },
+        {
+          "effect": "转价传导使相邻环节承接风险。",
+          "share_band": "moderate",
+          "substitution_band": "costly",
+          "basis_kind": "structural",
+          "tag": "转价传导",
+          "basis": "事实：本案例假设存在对应业务连接。待核：真实采购份额、替代成本和合同调价条款。",
+          "disclosed_share": null
+        }
+      ],
+      "mechanism": "cost_push",
+      "company_nodes": [
+        "brand"
+      ],
+      "source_refs": [
+        "source-SYN001",
+        "source-model"
+      ],
+      "scenario": {
+        "kind": "cost_push",
+        "source": "原料",
+        "target": "终端",
+        "shock": 0.1,
+        "pass_through": 0.3,
+        "mapping_basis": "合成企业甲映射到四节点模型中的终端，用行业成本系数作说明性代理。"
+      }
+    },
+    {
+      "layers": [
+        [
+          {
+            "id": "raw",
+            "label": "演示原料",
+            "scores": {
+              "impact": 3,
+              "substitutability": 3,
+              "consequence": 3
+            },
+            "comparison": {
+              "impact": "按演示规格给定影响范围。",
+              "substitutability": "按演示窗口内替换条件给定。",
+              "consequence": "用于本链内比较传导后果。",
+              "counter_evidence": "库存缓冲与替代订单可减轻影响。",
+              "reversal_condition": "实际合同与备货变化后须重新评定。"
+            }
+          }
+        ],
+        [
+          {
+            "id": "assembly",
+            "label": "演示加工",
+            "scores": {
+              "impact": 4,
+              "substitutability": 4,
+              "consequence": 4
+            },
+            "comparison": {
+              "impact": "按演示规格给定影响范围。",
+              "substitutability": "按演示窗口内替换条件给定。",
+              "consequence": "用于本链内比较传导后果。",
+              "counter_evidence": "库存缓冲与替代订单可减轻影响。",
+              "reversal_condition": "实际合同与备货变化后须重新评定。"
+            }
+          }
+        ],
+        [
+          {
+            "id": "brand",
+            "label": "演示终端",
+            "scores": {
+              "impact": 2,
+              "substitutability": 2,
+              "consequence": 2
+            },
+            "comparison": {
+              "impact": "按演示规格给定影响范围。",
+              "substitutability": "按演示窗口内替换条件给定。",
+              "consequence": "用于本链内比较传导后果。",
+              "counter_evidence": "库存缓冲与替代订单可减轻影响。",
+              "reversal_condition": "实际合同与备货变化后须重新评定。"
+            }
+          }
+        ]
+      ],
+      "links": [
+        [
+          "raw",
+          "assembly"
+        ],
+        [
+          "assembly",
+          "brand"
+        ]
+      ],
+      "event_kind": "conditional_scenario",
+      "risk_event": "终端订单减少的说明性情景",
+      "event_scope": "合成业务链，不对应真实企业事件",
+      "path_boundary": "只展示典型实体路径，投入产出矩阵另包含替代支路；不把行业关系视为真实客户名单。",
+      "core_node": "brand",
+      "core_reason": "演示终端组织订单并影响合同价格。",
+      "highest_node": "assembly",
+      "lowest_node": "brand",
+      "high_reason": "演示加工环节替代和调价较慢。",
+      "low_reason": "演示终端有订单结构调整余地。",
+      "impact": "扰动影响演示加工与终端。",
+      "substitutability": "演示窗口内更换材料需调整工艺。",
+      "consequence": "成本增加或订单减少使收益承压。",
+      "counter_evidence": "预先锁价、库存与新增订单可缓冲冲击。",
+      "boundary": "只在给定结构、贡献率与固定成本假设下成立。",
+      "target_impact": "终端订单减少沿采购关系传导；贡献率未知时，只能量化收入变化。",
+      "id": "demand-chain",
+      "title": "终端需求收缩与利润影响边界",
+      "company_id": "SYN002",
+      "risk_path": [
+        "brand",
+        "assembly",
+        "raw"
+      ],
+      "steps": [
+        {
+          "effect": "订单回落使相邻环节承接风险。",
+          "share_band": "substantial",
+          "substitution_band": "costly",
+          "basis_kind": "structural",
+          "tag": "订单回落",
+          "basis": "事实：本案例假设存在对应业务连接。待核：真实采购份额、替代成本和合同调价条款。",
+          "disclosed_share": null
+        },
+        {
+          "effect": "采购收缩使相邻环节承接风险。",
+          "share_band": "moderate",
+          "substitution_band": "costly",
+          "basis_kind": "structural",
+          "tag": "采购收缩",
+          "basis": "事实：本案例假设存在对应业务连接。待核：真实采购份额、替代成本和合同调价条款。",
+          "disclosed_share": null
+        }
+      ],
+      "mechanism": "demand_contraction",
+      "company_nodes": [
+        "assembly"
+      ],
+      "source_refs": [
+        "source-SYN002",
+        "source-model"
+      ],
+      "scenario": {
+        "kind": "demand_contraction",
+        "sales_share": 0.4,
+        "shock": 0.2,
+        "contribution_margin": null
+      }
+    }
+  ],
+  "quantitative_cases": [
+    {
+      "id": "copper",
+      "title": "铜价变化与成本吸收",
+      "kind": "copper_retention",
+      "inputs": {
+        "material_to_revenue": 0.6,
+        "copper_share": 0.3,
+        "unhedged": 0.8,
+        "price_change": 0.1,
+        "transfer": 0.2
+      },
+      "source_refs": [
+        "source-model"
+      ]
+    },
+    {
+      "id": "feed",
+      "title": "采购组合中的价格对冲",
+      "kind": "feed_mix",
+      "inputs": {
+        "corn_change": 0.1,
+        "soymeal_change": -0.2,
+        "corn_share": 0.5,
+        "soymeal_share": 0.2
+      },
+      "source_refs": [
+        "source-model"
+      ]
+    },
+    {
+      "id": "board",
+      "title": "板卡与整机的同批成本分配",
+      "kind": "board_transfer",
+      "inputs": {
+        "incremental_cost": 100,
+        "board_transfer": 0.6,
+        "brand_transfer": 0.25
+      },
+      "source_refs": [
+        "source-model"
+      ]
+    },
+    {
+      "id": "overlap",
+      "title": "产品与地区收入的可识别区间",
+      "kind": "revenue_overlap",
+      "inputs": {
+        "total": 100,
+        "product": 70,
+        "region": 60
+      },
+      "source_refs": [
+        "source-model"
+      ]
+    }
+  ]
+}

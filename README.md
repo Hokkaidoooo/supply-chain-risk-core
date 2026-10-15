@@ -1,90 +1,86 @@
-![产业链风险传播与数据契约](assets/cover.svg)
+![产业链风险分析与授信研究](assets/cover.svg)
 
-# 产业链风险传播与数据契约
+# 产业链风险分析与授信研究
 
-工行杯个人参赛项目中，能够独立运行的路径传播、财务口径和提交契约核心。
+工行杯个人参赛工程的公开整理版。输入工商、财务和来源记录，运行特征工程、评分与授信规则，再计算产业链传导情景，生成可以重新计算核验的分析报告。
 
-调用方提供产业链图与财务输入，模块返回带出处的路径暴露和经过口径校验的指标；契约模块负责检查提交结构与来源材料。
+仓库同时保留了本人编制的决赛分析成品：**五本 Excel、31 个工作表、13 张产业链图和一份模型讲解 Word**。通用代码使用合成案例演示；实际参赛报告按原版本单独归档。
 
-| 模块 | 行为 | 关键边界 |
+[查看完整演示结果](examples/results/report.md) · [查看决赛成果](case-studies/finals/README.md) · [方法与边界](docs/method.md) · [输入格式](docs/input-schema.md)
+
+## 已收录的能力
+
+| 部分 | 入口 | 输出 |
 | --- | --- | --- |
-| [supply_chain.py](src/supply_chain_risk_core/supply_chain.py) | 有预算的简单路径枚举、边权连乘、出处和估计标记 | 最强路径暴露不是违约概率，也不是 Leontief 总效应 |
-| [financial_metrics.py](src/supply_chain_risk_core/financial_metrics.py) | 严格校验 EBIT 与流动性披露口径 | 缺失不等于零；历史兼容和年度回退默认关闭 |
-| [facts.py](src/supply_chain_risk_core/facts.py) | 校验企业直接事实关系的方向、有效期和来源 | 不从行业共现推断企业关系，不扩展多跳 |
-| [submission_contract.py](src/supply_chain_risk_core/submission_contract.py) | 严格解析版本化契约 | 重复字段、来源不一致和未确认契约显式失败 |
-| [missing_values.py](src/supply_chain_risk_core/missing_values.py) | 统一缺失文本标记 | 不将缺失解释为无风险 |
+| 工商与财务特征 | [credit/workflow.py](src/supply_chain_risk_core/credit/workflow.py) | 资本、年限、经营与偿付能力特征，明确的缺失清单 |
+| 评分与授信规则 | [credit/scoring.py](src/supply_chain_risk_core/credit/scoring.py)、[credit/decision.py](src/supply_chain_risk_core/credit/decision.py) | 四维子分、授信方向、规则命中和风控建议依据 |
+| 路径与企业事实 | [supply_chain.py](src/supply_chain_risk_core/supply_chain.py)、[facts.py](src/supply_chain_risk_core/facts.py) | 最强路径暴露、可追溯的直接担保与应收关系 |
+| 投入产出与情景 | [input_output.py](src/supply_chain_risk_core/input_output.py)、[scenarios.py](src/supply_chain_risk_core/scenarios.py) | 总需求、固定源头价格影响、成本与需求压力情景 |
+| 阶段二分析 | [stage2](src/supply_chain_risk_core/stage2/) | 节点比较、依赖强度、成本分配和收入交叉区间 |
+| 报告与复现 | [reporting.py](src/supply_chain_risk_core/reporting.py)、[cli.py](src/supply_chain_risk_core/cli.py) | JSON、Markdown、HTML、SVG、Word、Excel，以及输入和源码指纹 |
 
-## 快速运行
+## 运行完整案例
 
-Python 3.10 或更新版本，运行依赖只有 NetworkX。以下命令均从仓库根目录执行。
-
-```sh
-python -m venv .venv
-```
-
-Windows：
+Python 3.10 或更新版本。以下是 Windows PowerShell 命令：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe demo.py
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install ".[reports]"
+.\.venv\Scripts\python.exe -m supply_chain_risk_core.cli demo --output output\demo-01
+.\.venv\Scripts\python.exe -m supply_chain_risk_core.cli verify output\demo-01
+```
+
+macOS / Linux 将解释器路径换为 `.venv/bin/python`，输出目录使用 `output/demo-01`。命令必须使用新的输出目录，已有结果不会被覆盖。
+
+打开输出目录中的 `report.html`，或查看 `report.docx`、`report.xlsx`。整个案例不需要联网取数或访问比赛目录。只需要文本和矢量结果时，安装 `pip install .` 并加 `--without-office`。
+
+演示中，企业甲、乙的四维风险分同为 19.6；甲满足放宽条件，乙因财务恶化规则收紧。企业丙缺少多项资料，保留模型输出并标记待复核。这说明财务证据层和评分层分别承担什么作用，不代表真实企业的授信建议。
+
+![合成成本传导案例](examples/results/chain-01.svg)
+
+## 使用自己的输入
+
+```powershell
+.\.venv\Scripts\python.exe -m supply_chain_risk_core.cli example --output my-input.json
+.\.venv\Scripts\python.exe -m supply_chain_risk_core.cli run --input my-input.json --output output\my-run-01
+```
+
+输入格式见 [输入契约](docs/input-schema.md)。金额单位、时间、来源和未知项必须显式填写。输入中的 `sources` 包含内容与指纹，程序核对一致性和适用日期，不会将一个网址当作已经在线核实的证据。
+
+三个开关均写入结果清单：
+
+- `--no-review-on-missing`：关闭缺失触发的复核标记，仍保留全部缺失项和模型证据状态。
+- `--include-policy-prior`：显式纳入原模型的历史行业政策先验，默认关闭。
+- `--advice-policy exact_match`：选择历史建议策略；默认使用 `business_complete` 的研究性措施口径。
+
+## 阅读实际参赛成果
+
+[决赛案例目录](case-studies/finals/README.md) 包含 006、011、018、023、025 五家企业的分析工作簿和全部 13 张图。文件来自 2026-10-11 最终复核版，内容与本人保留的成品一致。
+
+![决赛铜价传导分析](case-studies/finals/figures/006_chain1.png)
+
+[模型讲解材料](case-studies/finals/model-explanation.docx) 说明业务问题、证据口径、计算方法和应用边界；[案例文件清单](case-studies/finals/source-manifest.json) 给出各文件的 SHA-256。这些静态成品与可编辑的合成演示各有独立的来源标识。
+
+## 方法边界
+
+- 最强路径暴露取路径边权连乘的最大值；Leontief 总效应累积直接与间接投入。示例中两者分别为 **0.24** 与 **0.44**。
+- 需求收入下降不能直接当作利润下降。贡献率未知时，EBIT 损失与冲击后利息保障保持未知。
+- 节点风险分与依赖分是解释性比较尺度，不是违约概率。
+- 原模型没有经过足以证明预测竞争力的独立真值验证。测试、复现和历史比赛反馈各有不同用途，不能相互替代。
+- 仓库提供通用流程与精选成品。赛事原始数据、企业年报原件、账号资料和授权评审数据包不随库分发；完整历史计分件复现仍需相应合法输入。
+
+详见 [方法说明](docs/method.md)、[真实问题复盘](docs/lessons.md) 和 [来源与整理范围](docs/provenance.md)。
+
+## 验证与开发
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install ".[reports,dev]"
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m ruff check src tests tools
+.\.venv\Scripts\python.exe tools\check_manifest.py
+.\.venv\Scripts\python.exe -m build
 ```
 
-macOS / Linux：
+[验收记录](docs/expansion-validation.md) 说明单元测试、原算法对照、安装包、报告渲染和真实 CLI 复现的核验范围。原独立核心的接口与兼容开关见 [API 约定](docs/api.md)。
 
-```sh
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python demo.py
-.venv/bin/python -m unittest discover -s tests -v
-```
-
-## 示例说明
-
-`demo.py` 使用明确标注的合成图和合成金额，通过本仓库计算函数输出结果：
-
-```text
-原料 ──0.5──→ 加工 ──0.4──→ 终端
-  └──0.3──→ 替代环节 ──0.8──┘
-
-终端的最强路径暴露 = max(0.5 × 0.4, 0.3 × 0.8) = 0.24
-EBIT = 利润总额 1.2 + 利息费用 0.3 = 1.5 亿元
-利息保障倍数 = 1.5 / 0.3 = 5
-```
-
-这里的 0.24 不是预测概率。示例没有使用真实企业，没有运行完整信贷评分，也不产生比赛提交件。
-
-程序实际输出 JSON：`downstream_exposure` 中“终端”为 `0.24`，`earnings.ebit_yi` 为 `1.5`，`earnings.interest_cover_x` 为 `5.0`。`data_kind` 明确标记为 `synthetic_demonstration`。
-
-## 模块阅读顺序
-
-1. 从 [demo.py](demo.py) 开始：构造输入图 → 调用 `downstream_of` → 校验 EBIT 组成项 → 输出 JSON。它只使用路径和财务模块。
-2. 查看 [传播模块](src/supply_chain_risk_core/supply_chain.py)：`upstream_of` 与 `downstream_of` 返回各节点的最强路径暴露；`transmission_paths` 返回带边出处、估计标记与强度的路径报告。前两者默认两跳，路径报告默认三跳。
-3. 查看 [财务模块](src/supply_chain_risk_core/financial_metrics.py)：先用 `canonicalize_earnings` 核验金额组成和口径，再读取标准化后的指标。示例金额统一为亿元。
-4. 查看 [契约模块](src/supply_chain_risk_core/submission_contract.py) 与 [ContractTests](tests/test_core.py)：`load_submission_contract` 面向满足版本化 schema 的文件及来源材料。仓库没有附带可用于赛事提交的真实契约；随意构造或不完整的输入应当报错。
-
-0.2.0 提供 `pip install .` 安装入口。测试和示例都导入安装后的 `supply_chain_risk_core`，不再修改模块搜索路径。安装后可在仓库外运行 `python -m supply_chain_risk_core.demo` 或 `risk-core-demo`。稳定公共接口与迁移说明见 [API 约定](docs/api.md)。
-
-## 从比赛工程中保留的取舍
-
-- **系数与数据解耦**：路径函数接收调用方给出的图，不在算法内加载固化行业表或猜测节点别名。
-- **聚合节点只作端点**：调用方可通过 `endpoint_only` 禁止跨越聚合代理，以免把两个子行业通过总量节点连成虚构链路。
-- **出处跟随路径**：每条边的 `provenance`、`estimated` 随报告返回；没有给出年份时保留 `None`。
-- **财务口径先于比值**：EBIT 使用利润总额加利息费用；净财务费用与利息费用不混用。
-- **未知不写成零**：无图覆盖不代表无风险；零利息费用下的保障倍数无定义。
-- **信用链不能凭行业共现编造**：只返回查询时有效、有出处、风险方向明确的直接担保或应收关系；缺来源、过期和未公开的输入明确失败。
-
-## 测试与范围
-
-测试覆盖最强路径与路径和的区别、环路、跳数边界、聚合节点、来源标记、财务组成项冲突、缺失和非有限数，以及重复或不完整契约。
-
-这份公开核心不等同于完整参赛系统。行业数据接入、全量风险特征、信贷策略、比赛数据与历史交付物没有包含在内。当前测试不能证明预测准确率、实际信贷收益或比赛排名。
-
-传播路径只接受 `[0, 1]` 的有限边权。节点暴露查询默认两跳，路径报告默认三跳，上限八跳。一次调用默认最多检查 100000 条候选边，超出时抛出 `TraversalBudgetExceeded`，不返回不完整结果。`max_expansions=None` 显式关闭预算；`top_k` 只控制返回数量，不能跳过完整性检查。聚合节点集合为空时不启用端点阻断规则。
-
-财务入口默认 `allow_legacy=False`，缺失与冲突会报错。仅处理已知旧版输入时开启 `allow_legacy=True`，迁移结果保留旧值和规则。后续余额披露不完整默认报错；`allow_annual_fallback=True` 才允许整体使用年末口径，结果同时保留两次披露的时点和来源，不能混同为后续时点的完整披露。
-
-## 来源与许可
-
-这是个人参赛项目的公开整理版本。财务和传播模块已在独立仓库演进；契约与缺失值模块移入包内，详见 [来源说明](docs/provenance.md)。本轮实际验证见 [验收记录](docs/optimization-validation.md)。
-
-代码采用 [MIT License](LICENSE)。本仓库不包含公司代码、赛事原始数据、企业原件、第三方数据表、截图或付费材料。NetworkX 使用其自身许可证；本仓库通过依赖安装引用它，没有复制其实现。
+代码沿用 [MIT License](LICENSE)。引用资料的权利与使用条件归原来源；本仓库附带的是本人编写的分析成品和明确标注的合成案例。
