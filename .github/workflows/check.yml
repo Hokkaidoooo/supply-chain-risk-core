@@ -21,6 +21,27 @@ jobs:
       - run: python -m compileall -q src
       - run: python tools/check_manifest.py
       - run: python -B -m supply_chain_risk_core.cli verify examples/results
+      - name: Show analysis differences after a failed check
+        if: failure()
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          import difflib
+          import json
+          from pathlib import Path
+          from supply_chain_risk_core._console import configure_utf8_output
+          from supply_chain_risk_core.credit.workflow import WorkflowOptions
+          from supply_chain_risk_core.study import analyze_study
+          from supply_chain_risk_core.validation import fingerprint, json_ready, load_json
+          configure_utf8_output()
+          root = Path('examples/results')
+          manifest = load_json(root / 'manifest.json')
+          stored = load_json(root / 'analysis.json')
+          actual = analyze_study(load_json(root / 'input.json'), WorkflowOptions(**manifest['options']))
+          print('保存的分析指纹一致:', fingerprint(stored) == manifest['analysis_fingerprint'])
+          render = lambda value: json.dumps(json_ready(value), ensure_ascii=False, sort_keys=True, indent=2).splitlines()
+          print('\n'.join(difflib.unified_diff(render(stored), render(actual), fromfile='saved', tofile='recomputed')))
+          PY
       - run: python -m build
       - name: Run installed package outside repository
         shell: bash
