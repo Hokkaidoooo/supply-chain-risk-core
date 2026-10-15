@@ -1,4 +1,4 @@
-# 0.2.0 API 与迁移
+# 0.3.0 API 与迁移
 
 ## 完整研究流程
 
@@ -7,6 +7,8 @@
 `from supply_chain_risk_core.input_output import analyze_input_output` 接收节点名称、直接消耗矩阵和固定价格源头，返回总需求与价格影响。默认最多 256 个节点，条件数上限为 `1e12`；分别传入 `max_nodes=None`、`condition_limit=None` 可以关闭对应计算预算或数值敏感性检查。非负性与谱半径仍须满足模型定义。
 
 报告目录由 `supply_chain_risk_core.cli.run_to_directory` 生成，`verify_directory` 核验成员与字节并重新计算。输出目录和成员均独占创建，不覆盖已有结果；清单最后落地。命令行详见 [README](../README.md) 与 [复现说明](reproducibility.md)。
+
+两入口默认只允许矩阵条件数出现不超过 32 ULP 的有限正浮点微差，并返回 `recompute_policy` 和 `numerical_differences`；其他结果与全部保存内容指纹严格比较。传入 `exact_recompute=True` 可要求复算逐位一致。比较策略由源码绑定，清单不能放宽它；原始计算值和矩阵病态判断不受影响。
 
 路径与财务核心的参数见下文。
 

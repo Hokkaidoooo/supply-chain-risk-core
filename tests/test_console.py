@@ -33,8 +33,9 @@ class ConsoleEncodingTests(unittest.TestCase):
             stdout, _ = self.run_python('-m', 'supply_chain_risk_core.cli', 'demo',
                                         '--without-office', '--output', output)
             self.assertEqual(json.loads(stdout)['output'], str(output))
-            stdout, _ = self.run_python('-m', 'supply_chain_risk_core.cli', 'verify', output)
+            stdout, _ = self.run_python('-m', 'supply_chain_risk_core.cli', 'verify', output, '--exact-recompute')
             self.assertTrue(json.loads(stdout)['recomputed'])
+            self.assertEqual(json.loads(stdout)['recompute_policy'], 'exact')
 
     def test_command_help_uses_utf8(self):
         commands = [('-m', 'supply_chain_risk_core.cli', '--help'),

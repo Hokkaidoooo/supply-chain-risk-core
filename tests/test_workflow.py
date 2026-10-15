@@ -1,6 +1,7 @@
 import copy
 from decimal import Decimal
 import json
+import math
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -14,7 +15,9 @@ from supply_chain_risk_core.scenarios import cost_impact, demand_impact
 from supply_chain_risk_core.stage2.quantitative import number, revenue_overlap_bounds
 from supply_chain_risk_core.study import analyze_study
 from supply_chain_risk_core.supply_chain import downstream_of
-from supply_chain_risk_core.validation import canonical_bytes, file_digest, load_json
+from supply_chain_risk_core.validation import canonical_bytes, file_digest, fingerprint, load_json
+
+CONDITION_TEST_OFFSET_ULPS = 16
 
 
 class WorkflowTests(unittest.TestCase):
@@ -211,7 +214,7 @@ class ReproductionTests(unittest.TestCase):
             self.assertEqual((first / 'analysis.json').read_bytes(), before)
             self.assertNotIn(b'\r\n', (first / 'report.md').read_bytes())
 
-    def test_tampered_analysis_fails_even_if_file_hash_is_updated(self):
+    def test_tampered_analysis_fails_even_if_all_stored_hashes_are_updated(self):
         with TemporaryDirectory() as temporary:
             root = Path(temporary) / 'report'
             run_to_directory(example_document(), root, office=False)
@@ -222,9 +225,40 @@ class ReproductionTests(unittest.TestCase):
             for entry in manifest['files']:
                 if entry['path'] == 'analysis.json':
                     entry.update(sha256=file_digest(root / 'analysis.json'), bytes=(root / 'analysis.json').stat().st_size)
+            manifest['analysis_fingerprint'] = fingerprint(analysis)
             (root / 'manifest.json').write_bytes(canonical_bytes(manifest))
             with self.assertRaisesRegex(ValueError, '计算结果'):
                 verify_directory(root)
+
+    def test_condition_roundoff_preserves_file_and_analysis_hash_checks(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary) / 'report'
+            run_to_directory(example_document(), root, office=False)
+            analysis = load_json(root / 'analysis.json')
+            # 精确距离由纯比较回归覆盖；这里留出余量，专门核验两个哈希关卡。
+            for _ in range(CONDITION_TEST_OFFSET_ULPS):
+                analysis['input_output']['condition_number'] = math.nextafter(
+                    analysis['input_output']['condition_number'], math.inf)
+            (root / 'analysis.json').write_bytes(canonical_bytes(analysis) + b'\n')
+            with self.assertRaisesRegex(ValueError, '结果文件发生变化'):
+                verify_directory(root)
+            manifest = load_json(root / 'manifest.json')
+            for entry in manifest['files']:
+                if entry['path'] == 'analysis.json':
+                    entry.update(sha256=file_digest(root / 'analysis.json'), bytes=(root / 'analysis.json').stat().st_size)
+            (root / 'manifest.json').write_bytes(canonical_bytes(manifest))
+            with self.assertRaisesRegex(ValueError, '保存的分析内容指纹'):
+                verify_directory(root)
+            manifest['analysis_fingerprint'] = fingerprint(analysis)
+            (root / 'manifest.json').write_bytes(canonical_bytes(manifest))
+            verification = verify_directory(root)
+            self.assertEqual(verification['recompute_policy'], 'condition_number_32_ulps')
+            difference = verification['numerical_differences'][0]
+            self.assertEqual(difference['saved'], analysis['input_output']['condition_number'])
+            self.assertGreater(difference['ulp_distance'], 0)
+            self.assertLessEqual(difference['ulp_distance'], 32)
+            with self.assertRaisesRegex(ValueError, 'condition_number'):
+                verify_directory(root, exact_recompute=True)
 
     def test_duplicate_json_fields_and_nonfinite_literals_fail(self):
         with TemporaryDirectory() as temporary:

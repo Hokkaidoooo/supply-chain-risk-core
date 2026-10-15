@@ -21,7 +21,7 @@
       "path": "src/supply_chain_risk_core/cli.py",
       "original_path": null,
       "original_sha256": null,
-      "public_sha256": "016d51a1663594602cb9f428b96db134205d63cfa3f195f6d153ee0f05bdd1e0",
+      "public_sha256": "ab3746d7c4122a2e04a725b049d3187e650da3d5b338d7f23d556b211c544491",
       "relationship": "public_implementation"
     },
     {
@@ -127,6 +127,13 @@
       "original_path": null,
       "original_sha256": null,
       "public_sha256": "177b88e9fa79ad9fec7208c78697c1927ca6e5cfc984881f3d9bcb7b77edd445",
+      "relationship": "public_implementation"
+    },
+    {
+      "path": "src/supply_chain_risk_core/reproduction.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "b949bdd75f664338e76bb13b91b292a8a7c5bf8aaf38d9995aa892d7f9e8e2fb",
       "relationship": "public_implementation"
     },
     {
