@@ -13,6 +13,7 @@ import sys
 import numpy as np
 import pandas as pd
 
+from supply_chain_risk_core._console import configure_utf8_output
 from supply_chain_risk_core.cli import example_document
 from supply_chain_risk_core.credit import decision as public_decision, rules as public_rules, scoring as public_scoring
 from supply_chain_risk_core.credit.deep_features import deep_features as public_deep
@@ -96,6 +97,7 @@ def compare(original_root):
 
 
 if __name__ == '__main__':
+    configure_utf8_output()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--original-root', required=True, type=Path)
     args = parser.parse_args()

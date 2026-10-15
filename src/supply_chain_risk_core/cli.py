@@ -6,6 +6,7 @@ import json
 from pathlib import Path, PurePosixPath
 from tempfile import TemporaryDirectory
 
+from ._console import configure_utf8_output
 from .credit.workflow import WorkflowOptions
 from .reporting import write_reports
 from .study import analyze_study
@@ -104,6 +105,7 @@ def _options(args):
 
 
 def main(argv=None):
+    configure_utf8_output()
     parser = argparse.ArgumentParser(description="产业链风险、授信模型与阶段二报告")
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("run", "demo"):

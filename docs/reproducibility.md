@@ -13,6 +13,8 @@ python -m supply_chain_risk_core.cli demo --output output/run-01
 python -m supply_chain_risk_core.cli verify output/run-01
 ```
 
+命令行的标准输出和错误输出统一为 UTF-8，包括中文帮助、错误提示与结果路径，不依赖 Windows 的默认代码页或 `PYTHONIOENCODING`。作为 Python 库导入时不会修改调用者的标准流设置。
+
 修改代码或输入后，请使用新的目录。源代码指纹改变时，旧结果会明确报告版本不匹配；历史结果仍应保留其对应代码。清单用于一致性核对，不是数字签名，也不能证明来源网址真实。
 
 ## 与原工程对照

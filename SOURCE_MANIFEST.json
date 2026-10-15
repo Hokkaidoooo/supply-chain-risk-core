@@ -11,10 +11,17 @@
       "relationship": "public_implementation"
     },
     {
+      "path": "src/supply_chain_risk_core/_console.py",
+      "original_path": null,
+      "original_sha256": null,
+      "public_sha256": "a5b7c8fbf1a023a6670e923a446abb9b293c1460791fca7f6eaae420be905dd2",
+      "relationship": "public_implementation"
+    },
+    {
       "path": "src/supply_chain_risk_core/cli.py",
       "original_path": null,
       "original_sha256": null,
-      "public_sha256": "96c4638c63e1b51628aab71f3c361c546dcbd3b4053a6f3e5bfc74cac0e49ce8",
+      "public_sha256": "016d51a1663594602cb9f428b96db134205d63cfa3f195f6d153ee0f05bdd1e0",
       "relationship": "public_implementation"
     },
     {
@@ -77,7 +84,7 @@
       "path": "src/supply_chain_risk_core/demo.py",
       "original_path": null,
       "original_sha256": null,
-      "public_sha256": "ca574e660ac5076ae7992417b52d58687ab94fa22eb3fe39e6a4b63a22899bd6",
+      "public_sha256": "b29376d1ba3053ae3a5c423a4b063a7af44f56a83d44b6ef0be5f0208f8b0192",
       "relationship": "public_implementation"
     },
     {

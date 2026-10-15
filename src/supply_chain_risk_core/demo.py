@@ -3,11 +3,13 @@ import json
 
 import networkx as nx
 
+from ._console import configure_utf8_output
 from .financial_metrics import CANONICAL_EBIT_BASIS, canonicalize_earnings
 from .supply_chain import downstream_of
 
 
 def main():
+    configure_utf8_output()
     graph = nx.DiGraph()
     graph.add_weighted_edges_from([
         ("原料", "加工", 0.5),
