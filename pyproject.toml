@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "supply-chain-risk-core"
-version = "0.3.0"
+version = "0.3.1"
 description = "产业链传导、授信规则、可追溯情景分析与报告复现"
 readme = "README.md"
 requires-python = ">=3.10"

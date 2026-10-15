@@ -11,7 +11,8 @@ from ..evidence import validate_references
 from ..financial_metrics import CANONICAL_EBIT_BASIS
 from ..missing_values import is_missing_text
 from ..validation import day, exact_keys, finite_number, json_ready, nonempty_list, text
-from .deep_features import DEEP_FEATURE_COLS, _parse_capital, _parse_dates, deep_features
+from .capital import parse_capital_wan
+from .deep_features import DEEP_FEATURE_COLS, _parse_dates, deep_features
 from .decision import ADVICE_POLICIES, _combo_evidence, _fin_evidence, decide_all, hard_tight_hits, whitelist_failures
 from .financial_features import _LISTED_FIN_COLS, listed_financial_features
 from .scoring import composite_score
@@ -30,7 +31,6 @@ FINANCIAL_FIELDS = FINANCIAL_NUMBERS | FINANCIAL_FLAGS | {
 STATUS_RISK = {"开业": 0.0, "存续": 0.0, "在业": 0.0, "正常": 0.0,
                "注销": 1.0, "吊销": 1.0, "撤销": 1.0, "停业": 1.0, "迁出": 0.5}
 COMPANY_FIELDS = {"company_id", "name", "industry", "region", "registration", "risk_signals", "context", "financials", "source_refs"}
-CAPITAL_TOKEN = re.compile(r"\+?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?(?:亿|万)?(?:人民币|美元|欧元|香港元|港元|英镑|日元|元)(?:人民币)?")
 
 
 @dataclass(frozen=True)
@@ -60,9 +60,10 @@ def _registration(company, as_of):
         value = raw[field]
         if _missing(value):
             continue
-        normalized = re.sub(r"[\s,]", "", unicodedata.normalize("NFKC", value))
-        if CAPITAL_TOKEN.fullmatch(normalized) is None or pd.isna(_parse_capital(pd.Series([value])).iloc[0]):
-            raise ValueError(f"{company['company_id']} 的{field}金额或货币单位不能解析，拒绝当作缺失")
+        try:
+            parse_capital_wan(value)
+        except ValueError as error:
+            raise ValueError(f"{company['company_id']} 的{field}：{error}") from error
     for field in ("成立日期", "核准日期"):
         value = raw[field]
         if _missing(value):
@@ -134,8 +135,8 @@ def _financial(company, sources, as_of):
         if raw[key] is not None and (type(raw[key]) is not int or raw[key] not in (0, 1)):
             raise ValueError(f"{key} 须为 0、1 或 null")
     loss = raw["loss_years_3y"]
-    if loss is not None and (type(loss) is not int or not 0 <= loss <= 3):
-        raise ValueError("loss_years_3y 须为 0 至 3 的整数或 null")
+    if loss is not None and type(loss) is not int:
+        raise ValueError("loss_years_3y 须为整数或 null")
     year = raw["fiscal_year"]
     if type(year) is not int or not 1900 <= year < day(as_of, "as_of").year:
         raise ValueError("年度财务期末须早于基准日所在年度")

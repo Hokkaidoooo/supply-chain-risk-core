@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 
-from ..financial_metrics import canonicalize_earnings, interest_coverage, liquidity_metrics
+from ..financial_metrics import canonicalize_earnings, canonicalize_loss_history, interest_coverage, liquidity_metrics
 
 def _as_of_date(value):
     """统一自然日边界；当日任意时刻均视为截至当日可用。"""
@@ -73,7 +73,7 @@ def listed_financial_features(firms: pd.DataFrame, listed_fin, as_of=None):
     if listed_fin is None or len(listed_fin) == 0:
         return f
 
-    records = [canonicalize_earnings(row, allow_missing=True)
+    records = [canonicalize_loss_history(canonicalize_earnings(row, allow_missing=True))
                for row in listed_fin.to_dict('records')]
     fin = pd.DataFrame([dict(row, **liquidity_metrics(row, as_of=as_of))
                         for row in records], index=listed_fin.index)
@@ -109,7 +109,6 @@ def listed_financial_features(firms: pd.DataFrame, listed_fin, as_of=None):
     matched = firm_id.isin(by_id.index) | firm_code.isin(by_code.index)
     f['fin_has_record'] = matched.astype(int)
     loss_years = pick('loss_years_3y')
-    loss_years = loss_years.where(loss_years.between(0, 3) & (loss_years % 1 == 0))
     f['fin_loss_years_3y'] = loss_years.fillna(-1.0)
     turn_to_loss = pick('turn_to_loss')
     f['fin_turn_to_loss'] = flag(turn_to_loss.isin([0, 1]), turn_to_loss > 0)

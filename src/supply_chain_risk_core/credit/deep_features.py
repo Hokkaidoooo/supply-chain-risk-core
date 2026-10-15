@@ -6,11 +6,9 @@ import numpy as np
 import pandas as pd
 
 from ..missing_values import is_missing_text
+from .capital import parse_capital_wan
 
 # ---------------------------------------------------------------- 常量
-_FX = {'元': 1.0, '人民币': 1.0, '美元': 7.2, '欧元': 7.8, '香港元': 0.92,
-       '港元': 0.92, '英镑': 9.1, '日元': 0.05}          # 折万元人民币(近似汇率, 仅作可比性)
-
 _TIER1 = {'北京', '上海', '广州', '深圳'}
 _NEW_TIER1 = {'成都', '重庆', '杭州', '西安', '武汉', '苏州', '郑州', '南京',
               '天津', '长沙', '东莞', '宁波', '佛山', '合肥', '青岛'}
@@ -99,36 +97,9 @@ def _col(f: pd.DataFrame, name: str) -> pd.Series:
 
 
 def _parse_capital(s: pd.Series) -> pd.Series:
-    """将元/万/亿元及常见币种统一为万元人民币；无法解析保留 NaN。
-
-    先做 NFKC 归一并去空格类分隔：全角逗号/全角数字/空格/NBSP 千分位
-    （'1，000万元'、'1 000万元'、'１０００万元'）此前静默解析成 1.0 万，
-    千倍缩水且混合命中时无闸门（2026-07-26 review）。
-    """
-    s = s.map(lambda v: unicodedata.normalize('NFKC', str(v)))
-    s = s.str.replace(r'\s', '', regex=True)
-    s = s.str.replace('\u2212', '-', regex=False)
-    cleaned = s.str.replace(',', '', regex=False)
-    number = r'[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?'
-    num = pd.to_numeric(
-        cleaned.str.extract('(' + number + ')', expand=False),
-        errors='coerce')
-    num = num.where((num >= 0) & np.isfinite(num) & (cleaned.str.count(number) == 1)
-                    & ~cleaned.str.contains(r'\([+-]?\d', regex=True))
-    unit = pd.Series(1.0, index=s.index)
-    unit = unit.mask(s.str.contains('亿', regex=False), 10000.0)
-    unit = unit.mask(~s.str.contains('亿', regex=False) & s.str.contains('万', regex=False), 1.0)
-    # 没有万/亿但明确以元计价（含美元/港元等）时，从元换算为万元。
-    unit = unit.mask(~s.str.contains('亿|万', regex=True) & s.str.contains('元', regex=False), 0.0001)
-
-    currency = pd.Series(1.0, index=s.index)
-    # 长名称优先，避免“香港元”先命中“元”。
-    for name in sorted(_FX, key=len, reverse=True):
-        if name in ('元', '人民币'):
-            continue
-        currency = currency.mask(s.str.contains(name, regex=False), _FX[name])
-    result = num * unit * currency
-    return result.where(np.isfinite(result))
+    """沿用标量解析契约，保留 Series 索引；不把坏金额伪装成缺失。"""
+    values = s.astype(object).where(s.notna(), None)
+    return values.map(parse_capital_wan).astype(float)
 
 
 _CN_DATE_RE = re.compile(r'(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日?')
@@ -270,9 +241,10 @@ def deep_features(f: pd.DataFrame, as_of, ref: pd.DataFrame = None) -> pd.DataFr
         ref = f
 
     # ---------- 1. 资本充实度 ----------
-    raw_reg, raw_paid = _col(f, '注册资本'), _col(f, '实缴资本')
-    reg = _parse_capital(raw_reg)
-    paid = _parse_capital(raw_paid)                       # '-' -> NaN
+    unknown_capital = pd.Series(None, index=f.index, dtype=object)
+    # 数值文本直接交给专用解析器，通用文本清洗不能删除数字之间的字符。
+    reg = _parse_capital(f.get('注册资本', unknown_capital))
+    paid = _parse_capital(f.get('实缴资本', unknown_capital))
     out['reg_capital_wan'] = reg
     out['paid_capital_wan'] = paid                         # 未披露保持未知，收尾填 -1 哨兵
     # 零注册资本不能作分母；先消除无定义比率，再截断合法比率。
@@ -281,7 +253,7 @@ def deep_features(f: pd.DataFrame, as_of, ref: pd.DataFrame = None) -> pd.DataFr
     out['paid_in_disclosed'] = paid.notna().astype(int)
     out['paid_in_full'] = (paid.notna() & (ratio >= 0.95)).astype(int)
     out['log1p_reg_capital'] = np.log1p(reg)
-    out['cap_foreign_currency'] = raw_reg.str.contains(
+    out['cap_foreign_currency'] = _col(f, '注册资本').str.contains(
         '美元|欧元|香港元|港元|英镑|日元', regex=True).astype(int)
 
     # ---------- 2. 成立/核准日期 ----------

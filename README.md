@@ -45,7 +45,7 @@ macOS / Linux 将解释器路径换为 `.venv/bin/python`，输出目录使用 `
 .\.venv\Scripts\python.exe -m supply_chain_risk_core.cli run --input my-input.json --output output\my-run-01
 ```
 
-输入格式见 [输入契约](docs/input-schema.md)。金额单位、时间、来源和未知项必须显式填写。输入中的 `sources` 包含内容与指纹，程序核对一致性和适用日期，不会将一个网址当作已经在线核实的证据。
+输入格式见 [输入契约](docs/input-schema.md)。金额单位、时间、来源和未知项必须显式填写。资本采用统一语法换算，三期净利润与亏损年数须保持一致；[0.3.1 验证记录](docs/input-integrity-validation.md)给出具体边界与回归结果。输入中的 `sources` 包含内容与指纹，程序核对一致性和适用日期，不会将一个网址当作已经在线核实的证据。
 
 三个开关均写入结果清单：
 

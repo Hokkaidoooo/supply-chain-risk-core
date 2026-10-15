@@ -115,6 +115,24 @@ def canonicalize_earnings(record, *, allow_legacy=False, allow_missing=False):
     return normalized
 
 
+NET_PROFIT_HISTORY_FIELDS = ('net_profit_yi', 'net_profit_prev_yi', 'net_profit_prev2_yi')
+
+
+def canonicalize_loss_history(record):
+    """同口径三期利润约束亏损年数；完整原值可推导，缺年不补零。"""
+    profits = [_number(record.get(field), field, True) for field in NET_PROFIT_HISTORY_FIELDS]
+    declared = _number(record.get('loss_years_3y'), 'loss_years_3y', True)
+    if not math.isnan(declared) and (not declared.is_integer() or not 0 <= declared <= len(profits)):
+        raise ValueError('loss_years_3y 须为 0 至 3 的整数或缺失')
+    known_losses = sum(value < 0 for value in profits)
+    unknown_years = sum(math.isnan(value) for value in profits)
+    if not math.isnan(declared) and not known_losses <= declared <= known_losses + unknown_years:
+        raise ValueError('loss_years_3y 与三期净利润不一致：已知记录允许 %s 至 %s 年亏损'
+                         % (known_losses, known_losses + unknown_years))
+    loss_years = known_losses if unknown_years == 0 else declared
+    return dict(record, loss_years_3y=loss_years)
+
+
 LIQUIDITY_ADJUSTMENT_FIELDS = frozenset((
     'schema_version', 'company_id', 'annual_pdf_sha256', 'pub_date', 'source_url',
     'pdf_pages', 'cash_restricted_yi', 'cash_earmarked_yi',

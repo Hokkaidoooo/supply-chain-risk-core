@@ -8,12 +8,14 @@
 
 0.1 版仅收录路径、财务、缺失值和提交契约四个模块。0.2 版增加可安装包、严格财务默认值、路径预算和直接企业事实关系。0.3 版接入工商特征、财务特征、评分与授信规则，补充投入产出、阶段二分析、报告导出和复现命令。
 
+0.3.1 版统一资本文字语法和单位换算，并核对三期净利润与亏损年数的一致性。该修订只作用于公开包；原评分权重、决策规则、合成输入和比赛成品不变。输入契约与边界见 [公开研究输入](input-schema.md)。
+
 原比赛目录保持不变。公开版以显式输入替代本机数据路径，复用已有财务与契约核心，没有复制另一套财务口径。代码对应关系和字节指纹记录在 [SOURCE_MANIFEST.json](../SOURCE_MANIFEST.json)。
 
 | 公开代码 | 原工程依据 | 主要整理 |
 | --- | --- | --- |
-| credit/deep_features.py | src/deep_features.py | 保留特征算法，调整包导入，移除读取比赛数据的自测入口 |
-| credit/financial_features.py | src/features.py | 提取财务特征、缺失状态和日期辅助函数 |
+| credit/deep_features.py、credit/capital.py | src/deep_features.py；公开版金额解析 | 保留其余特征算法，统一资本语法、倍率与缺失处理 |
+| credit/financial_features.py、financial_metrics.py | src/features.py、src/financial_metrics.py | 提取财务特征，统一财务组成项与亏损历史核验 |
 | credit/scoring.py、credit/decision.py | 同名原模块 | 保留评分与规则；输入坏数值明确失败 |
 | credit/rules.py | src/config.py | 提取所需规则常量，移除本机路径和预设全局修改 |
 | input_output.py、scenarios.py | src/transmission_impact.py | 参数化矩阵与情景，区分固定源头价格与总需求 |
