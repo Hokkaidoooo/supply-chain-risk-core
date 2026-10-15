@@ -1,2 +1,2 @@
 * text=auto eol=lf
-src/*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
+src/supply_chain_risk_core/*.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
