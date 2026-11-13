@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-11-13",
+  "competition": "第五届琶洲算法大赛：广州工行杯",
+  "challenge": "基于开放数据的产业链风险传导预测与银行信贷策略优化",
+  "results": [
+    {
+      "stage": "初赛",
+      "rank": 1,
+      "score": 67.2,
+      "listed_teams": 53,
+      "source": {
+        "file": "0826排行榜.xlsx",
+        "sha256": "03fda08ef44c527428227d9420db195a98fcb501abb4816372f4f7ce3290ea44",
+        "sheet": "Sheet1",
+        "rank_cell": "A2",
+        "score_cell": "C2",
+        "counted_rows": "2:54",
+        "submissions_cell": "D2"
+      },
+      "submissions": 6
+    },
+    {
+      "stage": "决赛",
+      "rank": 1,
+      "score": 74.04,
+      "listed_teams": 15,
+      "source": {
+        "file": "决赛排行榜.xlsx",
+        "sha256": "e05ac63d5aea2b0fa6919ee087be797fc8ea661d56aaca2cd053220d9543c05c",
+        "sheet": "Sheet1",
+        "rank_cell": "A2",
+        "score_cell": "C2",
+        "counted_rows": "2:16"
+      }
+    }
+  ],
+  "score_unit": "赛事分数，不是准确率百分比",
+  "source_scope": "参赛者留存的赛事平台榜单原件；公开摘要仅提取本人名次、成绩及榜单队伍数，初赛另含累计提交次数。"
+}
